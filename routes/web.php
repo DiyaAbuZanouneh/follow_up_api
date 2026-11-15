@@ -20,3 +20,22 @@ Route::resource('order_route', OrderController::class);
 
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+// Route::middleware(['auth','role:admin'])->group(
+// function(){
+//     Route::get('admin/dashboard',function(){
+//     return view('admin.index');})
+// }
+// );
+
+Route::middleware(['auth', 'role:admin'])->group(function () {
+    Route::get('/admin/dashboard', function () {
+        return view('admin.dashboard');
+    })->name('admin.dashboard');
+});
+
+
+Route::middleware(['auth', 'role:employee'])->group(function () {
+    Route::get('/employee/dashboard', function () {
+        return view('employee.dashboard');
+    })->name('employee.dashboard');
+});
